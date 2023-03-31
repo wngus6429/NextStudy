@@ -1,6 +1,7 @@
 import { all, fork, delay, put, takeLatest } from 'redux-saga/effects';
 // 여기안에 delay, debounce, throttle, takeLastest, takeEvery, takeMaybe 같은것도 있음
 // 지금 적은것들이 사가의 effect라 불림
+import axios from 'axios';
 import {
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
@@ -12,12 +13,11 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
 } from '../reducers/user';
-import axios from 'axios';
 // 이거는 컴바인 리듀스 같은게 필요 없음.
 
-//logInAPI이거는 generator안임. * 붙이면 안됨
+// logInAPI이거는 generator안임. * 붙이면 안됨
 function logInAPI(data) {
-  return axios.post('/api/login', data); //로그인 요청 함
+  return axios.post('/api/login', data); // 로그인 요청 함
 }
 
 // 항상 effect 앞에는 yield(일드)를 붙여준다
@@ -31,7 +31,7 @@ function logInAPI(data) {
 // 굳이 yield를 안 붙여도되지만 붙이는 이유가 테스트 때문, 동작 보장이 되는가?
 function* logIn(action) {
   try {
-    console.log('Saga User.js');
+    console.log('Saga User.js, logIn');
     // const result = yield call(logInAPI, action.data); //이렇게 결과값 요청후 받음
     yield delay(1000); // 서버 만들어 질때까지 delay로 비동기 효과 주기
     yield put({
@@ -93,12 +93,15 @@ function* signUp() {
   }
 }
 
-// 이벤트 리스너를 만드는거임
+//! 이벤트 리스너를 만드는거임
+//! 창 맨처음 띄울때 실행되서 이벤트 올때까지 대기탐
 function* watchLogIn() {
+  console.log('watchLogIn');
   yield takeLatest(LOG_IN_REQUEST, logIn);
 } // 로그인이라는 action이 실행될떄까지 기다리겠다.
 
 function* watchLogOut() {
+  console.log('watchLogOut');
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
 

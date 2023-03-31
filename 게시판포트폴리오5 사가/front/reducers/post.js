@@ -34,15 +34,15 @@ export const initialState = {
       ],
     },
   ],
-  imagePaths: [], //이미지 경로들
+  imagePaths: [], // 이미지 경로들
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
 };
-//왜 User, Image, Comment만 첫글자에 대문자냐? db에서 쓰는 시퀄라이즈랑 관계있는데.어떤 정보와 다른 정보가 관게가 있으면 그것을 합쳐줌
-//합쳐준 애들은 대문자가 되기 때문 , id나 content는 게시글 속성이고
-//미리 서버 개발자한테 물어보는게 좋지
-//action은 객체이다
+// 왜 User, Image, Comment만 첫글자에 대문자냐? db에서 쓰는 시퀄라이즈랑 관계있는데.어떤 정보와 다른 정보가 관게가 있으면 그것을 합쳐줌
+// 합쳐준 애들은 대문자가 되기 때문 , id나 content는 게시글 속성이고
+// 미리 서버 개발자한테 물어보는게 좋지
+// action은 객체이다
 
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -83,7 +83,7 @@ const reducer = (state = initialState, action) => {
         mainPosts: [dummyPost, ...state.mainPosts],
         addPostLoading: false,
         addPostDone: true,
-      }; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
+      }; // dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
     case ADD_POST_FAILURE:
       return { ...state, addPostLoading: false, addPostError: action.error };
     case ADD_COMMENT_REQUEST:
@@ -93,7 +93,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         addCommentLoading: false,
         addCommentDone: true,
-      }; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
+      }; // dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
     case ADD_COMMENT_FAILURE:
       return { ...state, addCommentLoading: false, addCommentError: action.error };
     default:

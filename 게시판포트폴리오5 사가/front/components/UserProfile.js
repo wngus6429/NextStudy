@@ -41,5 +41,5 @@ const UserProfile = () => {
 
 export default UserProfile;
 
-//위에 actions 안에 내용이 배열이기 때문에 key를 붙여줘야함
-//배열로 jsx 쓸 때는 key를 붙여줘야함
+// 위에 actions 안에 내용이 배열이기 때문에 key를 붙여줘야함
+// 배열로 jsx 쓸 때는 key를 붙여줘야함

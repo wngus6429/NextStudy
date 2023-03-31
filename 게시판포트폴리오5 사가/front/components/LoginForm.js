@@ -31,7 +31,7 @@ const LoginForm = () => {
   // }, []);
 
   const onSubmitForm = useCallback(() => {
-    console.log(Email, Password);
+    console.log('dispatch(loginRequestAction({ Email, Password }));');
     dispatch(loginRequestAction({ Email, Password }));
   }, [Email, Password]);
   //Saga 랑, reducer가 거의 동시에 실행된다 보면됨
