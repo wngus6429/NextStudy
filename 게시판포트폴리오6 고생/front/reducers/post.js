@@ -15,16 +15,16 @@ export const initialState = {
       content: '첫번째 게시글 #해시태그, #익스프레스',
       Images: [
         {
-          id: shortId.generate(),
-          src: 'https://image.fmkorea.com/files/attach/new3/20230212/486616/38558862/5488187476/f336b718936a37cfd9eae2cfb78099ec.png',
+          src:
+            "https://d2v80xjmx68n4w.cloudfront.net/gigs/wWv081676229089.jpg",
         },
         {
-          id: shortId.generate(),
-          src: 'https://img2.quasarzone.com/editor/2023/02/12/7200bfe392669a6b1d37a1ae74ff5f2d.png',
+          src:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjMPuXdLYJC9gn5-rkGd69RpgYg23GArTCT4FzOR2bGb6vrNLs2HgIYqReJRUkHv_VWqM&usqp=CAU",
         },
         {
-          id: shortId.generate(),
-          src: 'https://s.gae9.com/trend/cd5f2d18dc207533.orig',
+          src:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRHrJIHYecs7LONs1yBDv7FmML5sSCoESzg9Q&usqp=CAU",
         },
       ],
       Comments: [
@@ -87,7 +87,7 @@ export const addComment = (data) => ({
 });
 
 export const dummyPost = (data) => ({
-  id: data.id, //AddPost 할때 id 만들어줌
+  id: shortId.generate(), // AddPost 할때 id 만들어줌
   content: data.content,
   User: {
     id: 1,
@@ -164,7 +164,9 @@ const reducer = (state = initialState, action) => {
       //그래야 바뀌는것만 바뀌고 안바뀌는거는 참조가 계속 유지되서 메모리를 절약 하는거임
       const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
       const post = { ...state.mainPosts[postIndex] };
+      console.log('post', post);
       post.Comments = [dummyComment(action.data.content), ...post.Comments];
+      console.log('postComments', post.Comments);
       const mainPosts = [...state.mainPosts];
       mainPosts[postIndex] = post;
       return {

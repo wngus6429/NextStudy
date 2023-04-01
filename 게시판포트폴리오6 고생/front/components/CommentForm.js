@@ -8,7 +8,7 @@ import { ADD_COMMENT_REQUEST } from "../reducers/post";
 
 const CommentForm = ({ post }) => {
   const dispatch = useDispatch();
-  const id = useSelector((state) => state.user.me?.id); //로그인 안했으면 me가 없기 때문에 없는 경우를 대비해줘야한다
+  const id = useSelector((state) => state.user.me?.id); // 로그인 안했으면 me가 없기 때문에 없는 경우를 대비해줘야한다
   const { addCommentDone, addCommentLoading } = useSelector((state) => state.post);
   const [CommentText, onChangeCommentText, setCommentText] = useinput("");
 

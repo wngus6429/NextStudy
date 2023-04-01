@@ -15,7 +15,7 @@ import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
 import shortId from "shortid";
 
 function addPostAPI(data) {
-  return axios.post("/api/post", data); //로그인 요청 함
+  return axios.post("/api/post", data); // 로그인 요청 함
 }
 function* addPost(action) {
   try {
@@ -30,8 +30,8 @@ function* addPost(action) {
       },
     });
     yield put({
-      type: ADD_POST_TO_ME, //게시글 작성하면 게시글에 대한 id와
-      data: id, //유저 id를 연결 해야하니까
+      type: ADD_POST_TO_ME, // 게시글 작성하면 게시글에 대한 id와
+      data: id, // 유저 id를 연결 해야하니까
     });
   } catch (err) {
     console.error(err);
@@ -43,20 +43,20 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete("/api/post", data); //로그인 요청 함
+  return axios.delete("/api/post", data); // 로그인 요청 함
 }
 function* removePost(action) {
   try {
-    //const result = yield call(addPostAPI, action.data);
+    // const result = yield call(addPostAPI, action.data);
     yield delay(1000);
     yield put({
       type: REMOVE_POST_SUCCESS,
       data: action.data,
     });
     yield put({
-      //user Reducer 조작부분
-      type: REMOVE_POST_OF_ME, //게시글 작성하면 게시글에 대한 id와
-      data: action.data, //유저 id를 연결 해야하니까
+      // user Reducer 조작부분
+      type: REMOVE_POST_OF_ME, // 게시글 작성하면 게시글에 대한 id와
+      data: action.data, // 유저 id를 연결 해야하니까
     });
   } catch (err) {
     console.error(err);
@@ -72,7 +72,7 @@ function addCommentAPI(data) {
 }
 function* addComment(action) {
   try {
-    //const result = yield call(addCommentAPI, action.data);
+    // const result = yield call(addCommentAPI, action.data);
     yield delay(1000);
     yield put({
       type: ADD_COMMENT_SUCCESS,

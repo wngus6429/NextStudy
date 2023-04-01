@@ -1,19 +1,20 @@
-import React, { useCallback, useRef, useEffect } from "react";
-import { Form, Input, Button } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { addPost } from "../reducers/post";
-import useinput from "../hooks/useinput";
+import React, { useCallback, useRef, useEffect } from 'react';
+import { Form, Input, Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPost } from '../reducers/post';
+import useinput from '../hooks/useinput';
 
 // const { Input } = require("antd");
 
 const PostForm = () => {
   const { addPostDone, imagePaths } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-  const [Text, onChangeText, setText] = useinput("");
+  const [Text, onChangeText, setText] = useinput('');
 
+  // addPostDone을 감지해서 작동
   useEffect(() => {
     if (addPostDone) {
-      setText("");
+      setText('');
     }
   }, [addPostDone]);
 
