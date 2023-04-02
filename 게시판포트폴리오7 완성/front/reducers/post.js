@@ -97,31 +97,32 @@ export const dummyPost = (data) => ({
 });
 
 export const dummyComment = (data) => ({
-  id: shortId.generate(), //이놈을 key로 사용중
+  id: shortId.generate(), // 이놈을 key로 사용중
   content: data,
   User: {
     id: 1,
-    nickname: "더미코멘트",
+    nickname: '더미코멘트',
   },
 });
 
-//reducer란 이전 상태를 액션을 통해 다음 상태로 만들어내는
-//immer가 불변성을 도와줌
-const reducer = (state = initialState, action) =>
-  produce(state, (draft) => {
+// reducer란 이전 상태를 액션을 통해 다음 상태로 만들어내는
+// immer가 불변성을 도와줌, draft라는 이름의 state임.
+// 밑에 보면 ...state가 사라짐
+const reducer = (state = initialState, action) => {
+  return produce(state, (draft) => {
     switch (action.type) {
       case LOAD_POSTS_REQUEST:
         draft.loadPostsLoading = true;
         draft.loadPostsDone = false;
         draft.loadPostsError = null;
-        break; //break 꼭 적어야함
+        break; // break 꼭 적어야함
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
         draft.mainPosts = action.data.concat(draft.mainPosts);
-        //action.data에 더미데이터들이 들어있을거고 그거랑 기존데이터랑 합쳐줌, 계속 추가하는거지
-        draft.hasMorePosts = draft.mainPosts.length < 50; //게시글 50개만 보겟다고
-        break; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
+        // action.data에 더미데이터들이 들어있을거고 그거랑 기존데이터랑 합쳐줌, 계속 추가하는거지
+        draft.hasMorePosts = draft.mainPosts.length < 50; // 게시글 50개만 보겟다고
+        break; // dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
         draft.loadPostsError = action.error;
@@ -130,12 +131,12 @@ const reducer = (state = initialState, action) =>
         draft.addPostLoading = true;
         draft.addPostDone = false;
         draft.addPostError = null;
-        break; //break 꼭 적어야함
+        break; // break 꼭 적어야함
       case ADD_POST_SUCCESS:
         draft.addPostLoading = false;
         draft.addPostDone = true;
         draft.mainPosts.unshift(dummyPost(action.data));
-        break; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
+        break; // dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
         draft.addPostError = action.error;
@@ -149,7 +150,7 @@ const reducer = (state = initialState, action) =>
         draft.removePostLoading = false;
         draft.removePostDone = true;
         draft.mainPosts = draft.mainPosts.filter((v) => v.id !== action.data);
-        break; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
+        break; // dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
       case REMOVE_POST_FAILURE:
         draft.removePostLoading = false;
         draft.removePostError = action.error;
@@ -165,29 +166,35 @@ const reducer = (state = initialState, action) =>
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
-      //   //action.data.content, postId, userId 가 들어있겟지
-      //   //불변성의 핵심은 바뀌는것만 새로운 객체로 만들고 나머지느 ㄴ객체는 참조를 유지함
-      //   //그래야 바뀌는것만 바뀌고 안바뀌는거는 참조가 계속 유지되서 메모리를 절약 하는거임
-      //   const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
-      //   const post = { ...state.mainPosts[postIndex] };
-      //   post.Comments = [dummyComment(action.data.content), ...post.Comments];
-      //   const mainPosts = [...state.mainPosts];
-      //   mainPosts[postIndex] = post;
-      //   return {
-      //     ...state,
-      //     mainPosts,
-      //     addCommentLoading: false,
-      //     addCommentDone: true,
-      //   }; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
-      // }
+        // action.data.content, postId, userId 가 들어있겟지
+        // 불변성의 핵심은 바뀌는것만 새로운 객체로 만들고 나머지느 ㄴ객체는 참조를 유지함
+        // 그래야 바뀌는것만 바뀌고 안바뀌는거는 참조가 계속 유지되서 메모리를 절약 하는거임
+        // const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
+        // const post = { ...state.mainPosts[postIndex] };
+        // post.Comments = [dummyComment(action.data.content), ...post.Comments];
+        // const mainPosts = [...state.mainPosts];
+        // mainPosts[postIndex] = post;
+        // return {
+        //   ...state,
+        //   mainPosts,
+        //   addCommentLoading: false,
+        //   addCommentDone: true,
+        // }; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
+        // }
       case ADD_COMMENT_FAILURE:
         draft.addCommentLoading = false;
         draft.addCommentError = action.error;
         break;
+        // return {
+        //   ...state,
+        //   addCommentLoading: false,
+        //   addCommentError: action.error,
+        // }
       default:
         break;
     }
   });
+};
 
 export default reducer;
 
