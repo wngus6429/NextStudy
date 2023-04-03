@@ -1,14 +1,14 @@
-import shortId from "shortid";
-import produce from "immer";
-import faker from "faker";
-//import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "./user";
+import shortId from 'shortid';
+import produce from 'immer';
+import faker from 'faker';
+// import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "./user";
 
-//댓글 객체에 접근 할려면 게시글을 찾고 아이디를 통해서 찾고
-//그 안에 Comments 여기로 접근,
+// 댓글 객체에 접근 할려면 게시글을 찾고 아이디를 통해서 찾고
+// 그 안에 Comments 여기로 접근,
 export const initialState = {
   mainPosts: [],
-  imagePaths: [], //이미지 경로들
-  hasMorePosts: true, //처음에 가져올 시도를 해야하니 당연 true
+  imagePaths: [], // 이미지 경로들
+  hasMorePosts: true, // 처음에 가져올 시도를 해야하니 당연 true
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
@@ -22,17 +22,17 @@ export const initialState = {
   addCommentDone: false,
   addCommentError: null,
 };
-//왜 User, Image, Comment만 첫글자에 대문자냐? db에서 쓰는 시퀄라이즈랑 관계있는데.어떤 정보와 다른 정보가 관게가 있으면 그것을 합쳐줌
-//합쳐준 애들은 대문자가 되기 때문 , id나 content는 게시글 속성이고
-//대문자가 있는 것들은 id가 있어야함
-//미리 서버 개발자한테 물어보는게 좋지
-//action은 객체이다
+//  왜 User, Image, Comment만 첫글자에 대문자냐? db에서 쓰는 시퀄라이즈랑 관계있는데.어떤 정보와 다른 정보가 관게가 있으면 그것을 합쳐줌
+// 합쳐준 애들은 대문자가 되기 때문 , id나 content는 게시글 속성이고
+// 대문자가 있는 것들은 id가 있어야함
+// 미리 서버 개발자한테 물어보는게 좋지
+// action은 객체이다
 
-//더미데이터를 나중에 성능최적화까지 고려하면 수천개 하는게 좋음
-//하나도 끊김없이 렌더링 되는거 그게 실력, 화면만 잘 만들면 하수
-//더미데이터로 여러가지 테스트, 무한스크롤링 등등 해볼수 있다
-//프론트엔드 개발자는 백엔드 개발자가 준비가 덜 되었더라도, 리덕스, 사가, 딜레이같은거
-//미리 프론트를 만들어둬야함. 데이터구조는 미리 회의 해두는게 좋지
+// 더미데이터를 나중에 성능최적화까지 고려하면 수천개 하는게 좋음
+// 하나도 끊김없이 렌더링 되는거 그게 실력, 화면만 잘 만들면 하수
+// 더미데이터로 여러가지 테스트, 무한스크롤링 등등 해볼수 있다
+// 프론트엔드 개발자는 백엔드 개발자가 준비가 덜 되었더라도, 리덕스, 사가, 딜레이같은거
+// 미리 프론트를 만들어둬야함. 데이터구조는 미리 회의 해두는게 좋지
 export const generateDummyPost = (number) =>
   Array(number)
     .fill()
@@ -40,7 +40,7 @@ export const generateDummyPost = (number) =>
       id: shortId.generate(),
       User: {
         id: shortId.generate(),
-        nickname: faker.name.findName(), //faker 공식문서 참조
+        nickname: faker.name.findName(), // faker 공식문서 참조
       },
       content: faker.lorem.paragraph(),
       Images: [
@@ -59,21 +59,21 @@ export const generateDummyPost = (number) =>
       ],
     }));
 
-export const LOAD_POSTS_REQUEST = "LOAD_POSTS_REQUEST";
-export const LOAD_POSTS_SUCCESS = "LOAD_POSTS_SUCCESS";
-export const LOAD_POSTS_FAILURE = "LOAD_POSTS_FAILURE";
+export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
+export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
+export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
 
-export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
-export const ADD_POST_SUCCESS = "ADD_POST_SUCCESS";
-export const ADD_POST_FAILURE = "ADD_POST_FAILURE";
+export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 
-export const REMOVE_POST_REQUEST = "REMOVE_POST_REQUEST";
-export const REMOVE_POST_SUCCESS = "REMOVE_POST_SUCCESS";
-export const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
+export const REMOVE_POST_REQUEST = 'REMOVE_POST_REQUEST';
+export const REMOVE_POST_SUCCESS = 'REMOVE_POST_SUCCESS';
+export const REMOVE_POST_FAILURE = 'REMOVE_POST_FAILURE';
 
-export const ADD_COMMENT_REQUEST = "ADD_COMMENT_REQUEST";
-export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
-export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
+export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
 export const addPost = (data) => ({
   type: ADD_POST_REQUEST,
@@ -86,11 +86,11 @@ export const addComment = (data) => ({
 });
 
 export const dummyPost = (data) => ({
-  id: data.id, //AddPost 할때 id 만들어줌
+  id: data.id, // AddPost 할때 id 만들어줌
   content: data.content,
   User: {
     id: 1,
-    nickname: "제로초",
+    nickname: '제로초',
   },
   Images: [],
   Comments: [],
@@ -166,30 +166,30 @@ const reducer = (state = initialState, action) => {
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
-        // action.data.content, postId, userId 가 들어있겟지
-        // 불변성의 핵심은 바뀌는것만 새로운 객체로 만들고 나머지느 ㄴ객체는 참조를 유지함
-        // 그래야 바뀌는것만 바뀌고 안바뀌는거는 참조가 계속 유지되서 메모리를 절약 하는거임
-        // const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
-        // const post = { ...state.mainPosts[postIndex] };
-        // post.Comments = [dummyComment(action.data.content), ...post.Comments];
-        // const mainPosts = [...state.mainPosts];
-        // mainPosts[postIndex] = post;
-        // return {
-        //   ...state,
-        //   mainPosts,
-        //   addCommentLoading: false,
-        //   addCommentDone: true,
-        // }; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
-        // }
+      // action.data.content, postId, userId 가 들어있겟지
+      // 불변성의 핵심은 바뀌는것만 새로운 객체로 만들고 나머지느 ㄴ객체는 참조를 유지함
+      // 그래야 바뀌는것만 바뀌고 안바뀌는거는 참조가 계속 유지되서 메모리를 절약 하는거임
+      // const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
+      // const post = { ...state.mainPosts[postIndex] };
+      // post.Comments = [dummyComment(action.data.content), ...post.Comments];
+      // const mainPosts = [...state.mainPosts];
+      // mainPosts[postIndex] = post;
+      // return {
+      //   ...state,
+      //   mainPosts,
+      //   addCommentLoading: false,
+      //   addCommentDone: true,
+      // }; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
+      // }
       case ADD_COMMENT_FAILURE:
         draft.addCommentLoading = false;
         draft.addCommentError = action.error;
         break;
-        // return {
-        //   ...state,
-        //   addCommentLoading: false,
-        //   addCommentError: action.error,
-        // }
+      // return {
+      //   ...state,
+      //   addCommentLoading: false,
+      //   addCommentError: action.error,
+      // }
       default:
         break;
     }

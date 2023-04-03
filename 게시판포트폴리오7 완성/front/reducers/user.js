@@ -1,4 +1,4 @@
-import produce from "immer";
+import produce from 'immer';
 
 export const initialState = {
   followLoading: false, // 팔로우시도중
@@ -24,41 +24,41 @@ export const initialState = {
   loginData: {},
 };
 // export 해둬야 index.js에서 모으지
-export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
-export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
-export const LOG_IN_FAILURE = "LOG_IN_FAILURE";
+export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 
-export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST";
-export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS";
-export const LOG_OUT_FAILURE = "LOG_OUT_FAILURE";
+export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
+export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 
-export const SIGN_UP_REQUEST = "SIGN_UP_REQUEST";
-export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
-export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
+export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 
-export const CHANGE_NICKNAME_REQUEST = "CHANGE_NICKNAME_REQUEST";
-export const CHANGE_NICKNAME_SUCCESS = "CHANGE_NICKNAME_SUCCESS";
-export const CHANGE_NICKNAME_FAILURE = "CHANGE_NICKNAME_FAILURE";
+export const CHANGE_NICKNAME_REQUEST = 'CHANGE_NICKNAME_REQUEST';
+export const CHANGE_NICKNAME_SUCCESS = 'CHANGE_NICKNAME_SUCCESS';
+export const CHANGE_NICKNAME_FAILURE = 'CHANGE_NICKNAME_FAILURE';
 
-export const FOLLOW_REQUEST = "FOLLOW_REQUEST";
-export const FOLLOW_SUCCESS = "FOLLOW_SUCCESS";
-export const FOLLOW_FAILURE = "FOLLOW_FAILURE";
+export const FOLLOW_REQUEST = 'FOLLOW_REQUEST';
+export const FOLLOW_SUCCESS = 'FOLLOW_SUCCESS';
+export const FOLLOW_FAILURE = 'FOLLOW_FAILURE';
 
-export const UNFOLLOW_REQUEST = "UNFOLLOW_REQUEST";
-export const UNFOLLOW_SUCCESS = "UNFOLLOW_SUCCESS";
-export const UNFOLLOW_FAILURE = "UNFOLLOW_FAILURE";
+export const UNFOLLOW_REQUEST = 'UNFOLLOW_REQUEST';
+export const UNFOLLOW_SUCCESS = 'UNFOLLOW_SUCCESS';
+export const UNFOLLOW_FAILURE = 'UNFOLLOW_FAILURE';
 
-export const ADD_POST_TO_ME = "ADD_POST_TO_ME";
-export const REMOVE_POST_OF_ME = "REMOVE_POST_OF_ME";
+export const ADD_POST_TO_ME = 'ADD_POST_TO_ME';
+export const REMOVE_POST_OF_ME = 'REMOVE_POST_OF_ME';
 
 const dummyUser = (data) => ({
   ...data,
-  nickname: "주현",
+  nickname: '주현',
   id: 1,
   Posts: [{ id: 1 }],
-  Followings: [{ nickname: "부기초" }, { nickname: "감자" }, { nickname: "야이" }],
-  Followers: [{ nickname: "치킨" }, { nickname: "피자" }, { nickname: "양념" }],
-}); //시퀄라이즈에서 합쳐주기 때문에 앞에 대문자 인것들이 있다.
+  Followings: [{ nickname: '부기초' }, { nickname: '감자' }, { nickname: '야이' }],
+  Followers: [{ nickname: '치킨' }, { nickname: '피자' }, { nickname: '양념' }],
+}); // 시퀄라이즈에서 합쳐주기 때문에 앞에 대문자 인것들이 있다.
 
 export const loginRequestAction = (data) => {
   return {
@@ -74,18 +74,18 @@ export const logoutRequestAction = () => {
 };
 
 // => { return produce 임 ㅋㅋ 생략방법임
-//draft를 불변성 상관없이 바꾸면 알아서 다음 draft를 보고 다음 state를 불변성있게 만들어줌
+// draft를 불변성 상관없이 바꾸면 알아서 다음 draft를 보고 다음 state를 불변성있게 만들어줌
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case FOLLOW_REQUEST:
-        draft.followLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.followLoading = true; // 바꾸고 싶은걸 이렇게 적어준다.
         draft.followDone = false;
         draft.followError = null;
         break;
       case FOLLOW_SUCCESS:
         draft.followLoading = false;
-        draft.followDone = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.followDone = true; // 바꾸고 싶은걸 이렇게 적어준다.
         draft.me.Followings.push({ id: action.data });
         break;
       case FOLLOW_FAILURE:
@@ -194,6 +194,6 @@ export default reducer;
 //     data,
 //   };
 // };
-// changeNickname("boogicho");
-// // { type:"CHANGE_NICKNAME", data:"boogicho" }
+// changeNickname('boogicho');
+// // { type:'CHANGE_NICKNAME', data:'boogicho' }
 // //store.dispatch(changeNickname('mighty tak')); //이게 좋지
