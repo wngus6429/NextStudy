@@ -1,13 +1,13 @@
-const express = require("express");
-const cors = require("cors");
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const postRouter = require("./routes/post");
-const userRouter = require("./routes/user");
-const dotenv = require("dotenv");
-const db = require("./models");
-const passport = require("passport");
-const passportConfig = require("./passport");
+const express = require('express');
+const cors = require('cors');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const postRouter = require('./routes/post');
+const userRouter = require('./routes/user');
+const dotenv = require('dotenv');
+const db = require('./models');
+const passport = require('passport');
+const passportConfig = require('./passport');
 
 dotenv.config();
 const app = express();
@@ -15,13 +15,13 @@ const app = express();
 db.sequelize
   .sync()
   .then(() => {
-    console.log("db 연결 성공");
+    console.log('db 연결 성공');
   })
   .catch(console.error);
 
 app.use(
   cors({
-    origin: "*",
+    origin: '*',
   })
 );
 
@@ -44,20 +44,21 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/", (req, res) => {
-  res.send("hello express");
+app.get('/', (req, res) => {
+  res.send('hello express');
 });
 
-app.use("/post", postRouter); //앞에 "/post"를 붙임으로 인해서
-//routes폴더 post.js안에 있는 라우터들 앞에 자동으로 /post가 붙음
-//중복제거 , 앞에 post붙이는걸 프리픽스라고 한다
+app.use('/post', postRouter);
+// 앞에 "/post"를 붙임으로 인해서
+//! routes폴더 post.js안에 있는 라우터들 앞에 자동으로 /post가 붙음
+//! 중복제거 , 앞에 post붙이는걸 프리픽스라고 한다
 
-app.use("/user", userRouter);
+app.use('/user', userRouter);
 
 //에러처리 미들웨어는 여기쯤에 내부적으로 있음
 
 app.listen(3065, () => {
-  console.log("서버 실행 중!");
+  console.log('서버 실행 중!');
 });
 
 //브라우저 주소창에 치는건 get 요청임
