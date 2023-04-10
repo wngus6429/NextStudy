@@ -27,10 +27,11 @@ app.use(
 
 passportConfig();
 
-//프론트에서 온 정보를 req.body안에 넣어주는 역할을 이 두줄이 한다
-app.use(express.json()); //프론트에서 온 json형식 데이터를 req.body안에 넣음
+//!프론트에서 온 정보를 req.body안에 넣어주는 역할을 이 두줄이 한다
+app.use(express.json()); //! 프론트에서 온 json형식 데이터를 req.body안에 넣음
 app.use(express.urlencoded({ extended: true }));
-//form submit을 했을때 url인코딩 방식으로 데이터가 오는데.form 데이터를 req.body에 연결
+//! form submit을 했을때 url인코딩 방식으로 데이터가 오는데.form 데이터를 req.body에 연결
+
 app.use(cookieParser(process.env.COOKIE_SECRET)); //브라우저랑 백엔드 정보 일치를 위해, 문자 이상하게 보냄
 app.use(
   session({

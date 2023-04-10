@@ -46,7 +46,8 @@ router.post("/", isNotLoggedIn, async (req, res, next) => {
       return res.status(403).send("이미 사용중인 아이디입니다.");
     } //리턴 안 붙이면 밑에꺼 까지 실행됨
     console.log(req);
-    const hashedPassword = await bcrypt.hash(req.body.password, 11);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    //! create는 테이블에 데이터를 넣는거임, async await으로 동기 처리
     await User.create({
       email: req.body.email,
       nickname: req.body.nickname,
