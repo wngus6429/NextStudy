@@ -1,26 +1,27 @@
-const express = require("express");
-const { Post, Image, Comment } = require("../models");
-const { isLoggedIn } = require("./middlewares");
+const express = require('express');
+const { Post, Image, Comment } = require('../models');
+const { isLoggedIn } = require('./middlewares');
 const router = express.Router();
 //params는 변수를 담는다
 //게시글 작성
-router.post("/", isLoggedIn, async (req, res) => {
+router.post('/', isLoggedIn, async (req, res) => {
   try {
     const post = await Post.create({
       content: req.body.content,
       UserId: req.user.id,
     });
+    // 그냥 저장하면 위에꺼 밖에 안 들어 있으니까.
     const fullPost = await Post.findOne({
       where: { id: post.id },
       include: [
         {
-          model: Image,
+          model: Image, // 게시글에 달린 이미지
         },
         {
-          model: Comment,
+          model: Comment, // 게시글에 달린 코멘트
         },
         {
-          model: User,
+          model: User, // 게시글 작성자
         },
       ],
     });
@@ -32,14 +33,14 @@ router.post("/", isLoggedIn, async (req, res) => {
 });
 
 //동적 주소를 파라미터라 한다  //POST /post/comment
-router.post("/:postId/comment", isLoggedIn, async (req, res) => {
+router.post('/:postId/comment', isLoggedIn, async (req, res) => {
   try {
     const post = await Post.findOne({
       where: { id: req.params.postId }, //위에가 :postId니까
     });
     if (!post) {
       //post가 존재하지 않으면
-      return res.status(403).send("존재하지 않는 게시글입니다.");
+      return res.status(403).send('존재하지 않는 게시글입니다.');
     }
     const comment = await Comment.create({
       content: req.body.content,
@@ -53,9 +54,9 @@ router.post("/:postId/comment", isLoggedIn, async (req, res) => {
   }
 });
 
-router.delete("/", (req, res) => {
+router.delete('/', (req, res) => {
   //DELETE /post
-  res.send("api post delete 창이다");
+  res.send('api post delete 창이다');
 });
 
 module.exports = router;

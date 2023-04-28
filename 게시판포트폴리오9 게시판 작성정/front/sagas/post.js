@@ -1,5 +1,5 @@
-import { all, fork, delay, put, takeLatest, throttle, call } from "redux-saga/effects";
-import axios from "axios";
+import { all, fork, delay, put, takeLatest, throttle, call } from 'redux-saga/effects';
+import axios from 'axios';
 import {
   ADD_POST_REQUEST,
   ADD_POST_SUCCESS,
@@ -14,12 +14,12 @@ import {
   LOAD_POSTS_SUCCESS,
   LOAD_POSTS_FAILURE,
   generateDummyPost,
-} from "../reducers/post";
-import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
-import shortId from "shortid";
+} from '../reducers/post';
+import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
+import shortId from 'shortid';
 
 function loadPostsAPI(data) {
-  return axios.get("/api/posts", data); //로그인 요청 함
+  return axios.get('/api/posts', data); //로그인 요청 함
 }
 function* loadPosts(action) {
   try {
@@ -39,7 +39,7 @@ function* loadPosts(action) {
 }
 
 function addPostAPI(data) {
-  return axios.post("/post", { content: data }); //로그인 요청 함
+  return axios.post('/post', { content: data }); //로그인 요청 함
   //뒷부분을 저렇게 해줘야 req.body 안에 들어간다
 }
 function* addPost(action) {
@@ -64,7 +64,7 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete("/api/post", data); //로그인 요청 함
+  return axios.delete('/api/post', data); //로그인 요청 함
 }
 function* removePost(action) {
   try {
@@ -89,7 +89,7 @@ function* removePost(action) {
 }
 
 function addCommentAPI(data) {
-  return axios.post("/post/${data.id}/comment", data); //post/1/comment
+  return axios.post(`/post/${data.id}/comment`, data); //post/1/comment
 }
 function* addComment(action) {
   try {
